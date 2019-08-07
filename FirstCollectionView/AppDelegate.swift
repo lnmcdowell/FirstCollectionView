@@ -15,7 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        window = UIWindow()
+        //var cv = UICollectionView(frame: <#T##CGRect#>, collectionViewLayout: <#T##UICollectionViewLayout#>)
+        //var cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 300, height: UIScreen.main.bounds.height), collectionViewLayout: UICollectionViewFlowLayout())
+        let navController = UINavigationController(rootViewController: myCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout()))
+        window?.makeKeyAndVisible()
+        window?.rootViewController = navController
+        
         return true
     }
 
