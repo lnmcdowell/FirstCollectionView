@@ -49,7 +49,21 @@ class MyCollectionViewCell: UICollectionViewCell {
 }
 
 class myCollectionViewController: UICollectionViewController,
-UICollectionViewDelegateFlowLayout {
+UICollectionViewDelegateFlowLayout,UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewData!.names.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mine") as! UITableViewCell
+        cell.textLabel!.text = viewData!.names[indexPath.row]
+        return cell
+    }
+ 
+
+    
     let CELL_ID = "CELL_ID"
     var viewData:myData?
     
@@ -95,14 +109,53 @@ UICollectionViewDelegateFlowLayout {
         
 //        self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout:flowLayout)
 //
-        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 300, height: UIScreen.main.bounds.height), collectionViewLayout: flowLayout)
-       self.collectionView = cv
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 250, height: UIScreen.main.bounds.height - 20), collectionViewLayout: flowLayout)
+        cv.backgroundColor = .yellow
+        cv.translatesAutoresizingMaskIntoConstraints = false
+       
+       //self.collectionView = cv
+        let myContainer = UIView(frame: CGRect(x: 30, y: 30, width: 380, height: UIScreen.main.bounds.height))
+        myContainer.layer.borderWidth = 10
+        myContainer.layer.borderColor = UIColor.red.cgColor
+        myContainer.backgroundColor = .blue
+       // myContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        
+        
+       // cv.translatesAutoresizingMaskIntoConstraints = false
+        
         collectionView.widthAnchor.constraint(equalToConstant: CGFloat(integerLiteral: 200))
+        collectionView.heightAnchor.constraint(equalToConstant: 500)
+     
+        
         collectionView.register(MyCollectionViewCell.self, forCellWithReuseIdentifier: CELL_ID)
-        collectionView.delegate = self
-        collectionView.dataSource = self
+    //    collectionView.delegate = self
+    //    collectionView.dataSource = self
         collectionView.backgroundColor = UIColor.cyan
         collectionView.isUserInteractionEnabled = true
+        
+                //  let flowLayoutTwo = UICollectionViewFlowLayout()
+                //  let secondCollectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
+        let mytb = UITableView(frame: CGRect(x: 0, y: 0, width: 100, height: 200), style: .plain)
+        mytb.dataSource = self
+        mytb.delegate = self
+        mytb.register(UITableViewCell.self, forCellReuseIdentifier: "mine")
+        mytb.backgroundColor = .gray
+        //mytb.translatesAutoresizingMaskIntoConstraints = false
+      
+        myContainer.addSubview(cv)
+        
+        mytb.frame = CGRect(x: 270, y: 60, width: 80, height: 200)
+              myContainer.addSubview(mytb)
+//        cv.leadingAnchor.constraint(equalTo: myContainer.leadingAnchor, constant: 0).isActive = true
+//        cv.topAnchor.constraint(equalTo: myContainer.topAnchor, constant: 0).isActive = true
+//        cv.widthAnchor.constraint(equalToConstant: 250)
+//        cv.heightAnchor.constraint(equalToConstant: 400)
+//          mytb.leadingAnchor.constraint(equalTo: cv.trailingAnchor, constant: 0).isActive = true
+//            mytb.widthAnchor.constraint(equalToConstant: 100)
+//            mytb.heightAnchor.constraint(equalToConstant: 200)
+//        mytb.trailingAnchor.constraint(equalTo: myContainer.trailingAnchor, constant: 0)
+        self.view.addSubview(myContainer)
         
     }
 
